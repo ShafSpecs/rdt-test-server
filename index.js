@@ -95,10 +95,6 @@ function parseFile(filePath) {
     ImportDeclaration(path) {
       const importSource = path.node.source.value;
       const importSpecifier = path.node.specifiers.map(specifier => {
-        if (filePath == '../sw-example/app/routes/foo.tsx') {
-          console.log(specifier, 'specifier')
-        }
-
         return specifier.local.name;
       });
 
@@ -113,9 +109,6 @@ function parseFile(filePath) {
       }
     },
     ExportDefaultDeclaration(path) {
-      if (filePath == '../sw-example/app/routes/foo.tsx') {
-        console.log('Get lost! I\'m in...', 'mid-lower')
-      }
       const declarationType = path.node.declaration.type;
       if (declarationType === 'Identifier') {
         componentName = path.node.declaration.name;
