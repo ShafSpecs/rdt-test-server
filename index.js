@@ -193,6 +193,30 @@ wss.on('connection', function connection(ws, req) {
     let msg = JSON.parse(message);
     console.log('received: %s', msg);
 
+    if (msg.type === 'INIT') {
+      // This is supposed to build configs immediately as well as start 
+      // getting the source maps for the app. Should be triggered when the
+      // server starts up. Or when the client connects to the server. A choice.
+    }
+
+    if (msg.type === 'REFRESH') {
+      // This means a reload happened on the client.
+      // Shouldn't re-generate the source maps, just send them back to the client
+    }
+
+    if (msg.type === 'FILE_UPDATE') {
+      // This means a file was updated on the client.
+      // The client should send the type as well as the path of the file, 
+      // so we can parse that file right away whilst keeping the rest. That way,
+      // we don't have to re-parse the entire app again.
+    }
+
+    if (msg.type === 'FS_UPDATE') {
+      // This means an update was made on the file system, a file was either 
+      // created, deleted, or renamed on the client within the app directory.
+      // This should re-parse the entire app again.
+    }
+
     // no idea what this prints, ik I used it at first 
     const fileMetaData = Object.values(config.routes).find(route => route.id === msg.routeId);
 
